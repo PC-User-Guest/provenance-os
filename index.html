@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Provenance OS - Scientific Reproducibility Workspace</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-field"></div>
+    <header class="hero" id="top">
+      <nav class="nav">
+        <div class="logo">Provenance OS</div>
+        <div class="nav-links">
+          <a href="#overview">Overview</a>
+          <a href="#cockpit">Workspace</a>
+          <a href="#personas">Personas</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#interaction">Interaction</a>
+          <a href="#resilience">Resilience</a>
+          <a href="#simulation">Simulation</a>
+        </div>
+        <button class="nav-cta">Request briefing</button>
+      </nav>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Scientific data reproducibility</div>
+          <h1>Make every analysis verifiable the moment it is created.</h1>
+          <p>
+            Provenance OS transforms research computing into a live, auditable workspace
+            where every execution is captured, linked, and replayable across teams and
+            regulated environments.
+          </p>
+          <div class="hero-actions">
+            <button class="primary">Open provenance workspace</button>
+            <button class="secondary">View lineage graph</button>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric">
+              <div class="value" id="heroProjects">120+</div>
+              <div class="label">active studies</div>
+            </div>
+            <div class="metric">
+              <div class="value" id="heroAccuracy">99.3%</div>
+              <div class="label">replay accuracy</div>
+            </div>
+            <div class="metric">
+              <div class="value" id="heroVerify">14 min</div>
+              <div class="label">mean verify time</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="card-header">Live provenance pulse</div>
+          <div class="pulse-grid" id="pulseGrid"></div>
+          <div class="card-footer">
+            <span>Aesculapius Therapeutics</span>
+            <span class="status ok">Verified</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="overview" class="section reveal">
+      <div class="section-header">
+        <h2>Executive overview</h2>
+        <p>
+          Provenance OS unifies notebooks, pipelines, data versioning, and policy
+          enforcement so that provenance is captured automatically and trusted instantly.
+        </p>
+      </div>
+      <div class="overview-grid">
+        <div class="overview-card">
+          <h3>Ubiquitous capture</h3>
+          <p>
+            Every run, dataset, and environment snapshot is recorded without disrupting
+            exploratory workflows.
+          </p>
+        </div>
+        <div class="overview-card">
+          <h3>Temporal navigation</h3>
+          <p>
+            Rewind any project state, branch experiments safely, and merge with confidence
+            using time-aware lineage.
+          </p>
+        </div>
+        <div class="overview-card">
+          <h3>Regulatory readiness</h3>
+          <p>
+            Cryptographic hashes, policy-as-code, and immutable audit trails accelerate
+            regulatory submissions.
+          </p>
+        </div>
+        <div class="overview-card">
+          <h3>Research intelligence</h3>
+          <p>
+            Lineage graphs reveal how insights emerge, highlighting drift, schema change,
+            and reproducibility risk.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cockpit" class="section reveal">
+      <div class="section-header">
+        <h2>Provenance workspace</h2>
+        <p>
+          A dense, IDE-grade cockpit that merges live execution context with historical
+          lineage, audit status, and replay controls.
+        </p>
+      </div>
+      <div class="cockpit">
+        <div class="cockpit-main">
+          <div class="cockpit-header">
+            <div>
+              <div class="title">Lineage graph</div>
+              <div class="sub">Toxicity model pipeline - April cohort</div>
+            </div>
+            <div class="pill">Live</div>
+          </div>
+          <svg class="topology" id="topologyGraph" viewBox="0 0 640 360" role="img" aria-label="Provenance lineage graph">
+            <defs>
+              <linearGradient id="flow" x1="0" x2="1">
+                <stop offset="0%" stop-color="#29b9b3" />
+                <stop offset="100%" stop-color="#3a78ff" />
+              </linearGradient>
+            </defs>
+            <g class="edges" id="topologyEdges"></g>
+            <g class="nodes" id="topologyNodes"></g>
+            <g class="labels" id="topologyLabels"></g>
+          </svg>
+          <div class="timeline">
+            <div class="timeline-label">Timeline scrubber</div>
+            <input id="timeScrubber" type="range" min="0" max="2" step="1" value="0" />
+            <div class="timeline-meta" id="timeLabel">Now - nominal state</div>
+          </div>
+        </div>
+        <div class="cockpit-side">
+          <div class="panel">
+            <div class="panel-title">Active findings</div>
+            <div id="incidentList"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Reproducibility confidence</div>
+            <div class="trust-score">
+              <div class="score" id="trustScore">92</div>
+              <div class="score-meta">Composite reproducibility</div>
+            </div>
+            <div class="sparkline" id="trustSpark"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Policy gates</div>
+            <div class="route">
+              <span>OPA policy bundle</span>
+              <span class="tag">Passing</span>
+            </div>
+            <div class="route">
+              <span>CSV runner image</span>
+              <span class="tag">Pinned</span>
+            </div>
+            <div class="route">
+              <span>Ledger integrity</span>
+              <span class="tag">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer" id="artifactDrawer" aria-hidden="true">
+        <div class="drawer-header">
+          <div>
+            <div class="drawer-title" id="drawerTitle">Artifact details</div>
+            <div class="drawer-sub" id="drawerSubtitle"></div>
+          </div>
+          <button class="drawer-close" id="drawerClose" aria-label="Close">×</button>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-section">
+            <div class="panel-title">Status</div>
+            <div class="drawer-metrics" id="drawerMetrics"></div>
+          </div>
+          <div class="drawer-section">
+            <div class="panel-title">Provenance diff</div>
+            <pre class="schema-diff" id="drawerSchema"></pre>
+          </div>
+          <div class="drawer-section">
+            <div class="panel-title">Lineage impact</div>
+            <ul class="drawer-list" id="drawerLineage"></ul>
+          </div>
+          <div class="drawer-section">
+            <div class="panel-title">Suggested actions</div>
+            <div class="drawer-actions" id="drawerActions"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="personas" class="section reveal">
+      <div class="section-header">
+        <h2>Persona workspaces</h2>
+        <p>
+          Each role gets a tailored workspace aligned to its decisions, from hypothesis
+          exploration to compliance sign-off.
+        </p>
+      </div>
+      <div class="persona-shell">
+        <div class="persona-tabs" role="tablist" aria-label="Persona selector">
+          <button class="persona-tab is-active" data-persona="lead" role="tab">Research Lead</button>
+          <button class="persona-tab" data-persona="scientist" role="tab">Data Scientist</button>
+          <button class="persona-tab" data-persona="compliance" role="tab">Compliance</button>
+        </div>
+        <div class="persona-grid">
+          <div class="panel persona-summary" id="personaSummary"></div>
+          <div class="panel persona-focus" id="personaFocus"></div>
+          <div class="panel persona-actions" id="personaActions"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture" class="section reveal">
+      <div class="section-header">
+        <h2>Technical systems architecture</h2>
+        <p>
+          A layered platform spanning execution capture, event sourcing, content-addressed
+          storage, and a temporal provenance graph.
+        </p>
+      </div>
+      <div class="architecture-grid">
+        <div class="arch-node">
+          <div class="arch-title">Capture</div>
+          <p>Jupyter hooks, pipeline events, and OpenLineage telemetry.</p>
+        </div>
+        <div class="arch-node">
+          <div class="arch-title">Provenance engine</div>
+          <p>Event-sourced graph with temporal branching and merge semantics.</p>
+        </div>
+        <div class="arch-node">
+          <div class="arch-title">Versioned storage</div>
+          <p>Content-addressed data and environment digests for deterministic replay.</p>
+        </div>
+        <div class="arch-node">
+          <div class="arch-title">Policy gates</div>
+          <p>OPA enforcement for approved code, data, and runtime images.</p>
+        </div>
+        <div class="arch-node">
+          <div class="arch-title">Observability</div>
+          <p>Health scores, drift monitors, and provenance confidence metrics.</p>
+        </div>
+        <div class="arch-node">
+          <div class="arch-title">Presentation</div>
+          <p>Lineage canvas, forensic diffing, and reproducibility packages.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="interaction" class="section reveal">
+      <div class="section-header">
+        <h2>Interaction strategy</h2>
+        <p>
+          The interface pairs live coding with reflective provenance navigation so researchers
+          can move between exploration and verification without context switching.
+        </p>
+      </div>
+      <div class="interaction-grid">
+        <div class="panel interaction-card">
+          <div class="panel-title">Temporal navigation</div>
+          <p>
+            Timeline scrubbers, branch maps, and replay controls provide a clear audit trail
+            of how insights evolve over time.
+          </p>
+          <div class="interaction-meta">Time travel + branching merge review</div>
+        </div>
+        <div class="panel interaction-card">
+          <div class="panel-title">Forensic diffing</div>
+          <p>
+            Compare two executions at the data, parameter, and environment level to isolate
+            the source of drift.
+          </p>
+          <div class="interaction-meta">Input hash diff, output verification</div>
+        </div>
+        <div class="panel interaction-card">
+          <div class="panel-title">Reproducibility packages</div>
+          <p>
+            Export a sealed package containing data manifests, containers, and execution
+            certificates for external reviewers.
+          </p>
+          <div class="interaction-meta">Verified replay bundle</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resilience" class="section reveal">
+      <div class="section-header">
+        <h2>Failure-state resilience</h2>
+        <p>
+          Provenance OS surfaces gaps and drift without hiding uncertainty, while keeping
+          every artifact traceable and repairable.
+        </p>
+      </div>
+      <div class="resilience-grid" id="resilienceGrid"></div>
+    </section>
+
+    <section id="simulation" class="section reveal">
+      <div class="section-header">
+        <h2>Simulation and what-if analysis</h2>
+        <p>
+          Evaluate changes safely by replaying historical runs with new parameters, without
+          contaminating the main lineage.
+        </p>
+      </div>
+      <div class="simulation">
+        <div class="sim-panel">
+          <div class="sim-title">Replay depth</div>
+          <label for="replayRange">Replay window (days)</label>
+          <input id="replayRange" type="range" min="7" max="90" step="1" value="30" />
+          <div class="sim-metric">
+            <div class="value" id="replayValue">30 days</div>
+            <div class="label">Historical coverage</div>
+          </div>
+          <div class="sim-metric">
+            <div class="value" id="replayRisk">2.6%</div>
+            <div class="label">Drift risk</div>
+          </div>
+          <div class="sim-actions">
+            <button class="secondary">Run replay</button>
+            <button class="primary">Publish branch</button>
+          </div>
+        </div>
+        <div class="sim-panel wide">
+          <div class="sim-title">Replay impact</div>
+          <div class="sim-chart" id="simChart"></div>
+          <div class="sim-footer">
+            <div>
+              <div class="sim-key">Coverage</div>
+              <div class="sim-value">0.88</div>
+            </div>
+            <div>
+              <div class="sim-key">At-risk artifacts</div>
+              <div class="sim-value">7 flagged</div>
+            </div>
+            <div>
+              <div class="sim-key">Confidence</div>
+              <div class="sim-value">High</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-header">
+        <h2>LabBench DS design system</h2>
+        <p>
+          A component library tuned for scientific IDE workflows, delivering dense yet
+          navigable instrumentation across notebooks, graphs, and audit panels.
+        </p>
+      </div>
+      <div class="design-grid">
+        <div class="design-card">
+          <div class="token-title">Color semantics</div>
+          <div class="token-row">
+            <span class="swatch ok"></span>
+            <span>Verified</span>
+            <span>#2ac47d</span>
+          </div>
+          <div class="token-row">
+            <span class="swatch warn"></span>
+            <span>Drift</span>
+            <span>#f2a744</span>
+          </div>
+          <div class="token-row">
+            <span class="swatch crit"></span>
+            <span>Integrity</span>
+            <span>#ff5b5b</span>
+          </div>
+          <div class="token-row">
+            <span class="swatch meta"></span>
+            <span>Provenance meta</span>
+            <span>#7b6cff</span>
+          </div>
+        </div>
+        <div class="design-card">
+          <div class="token-title">Core primitives</div>
+          <ul>
+            <li>ProvenanceGraphCanvas</li>
+            <li>TimelineScrubber</li>
+            <li>ArtifactCard</li>
+            <li>DiffViewer</li>
+            <li>RunLog</li>
+          </ul>
+        </div>
+        <div class="design-card">
+          <div class="token-title">Type system</div>
+          <div class="type-stack">Sora - 22/30</div>
+          <div class="type-stack">JetBrains Mono - 13/20</div>
+          <div class="type-stack">Caps labels - 12/16</div>
+          <p class="type-note">Numerics use tabular figures for audit clarity.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>Provenance OS - reproducibility as a native property of research.</div>
+      <div class="footer-links">
+        <span>Security</span>
+        <span>Compliance</span>
+        <span>Contact</span>
+      </div>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>

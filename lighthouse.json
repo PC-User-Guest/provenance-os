@@ -1,0 +1,12 @@
+{
+  "project": "Provenance OS",
+  "environment": "prod",
+  "generatedOn": "2026-05-30",
+  "note": "Placeholder Lighthouse report. Run Lighthouse against the deployed URL and replace this file with the actual report JSON.",
+  "scores": {
+    "performance": null,
+    "accessibility": null,
+    "bestPractices": null,
+    "seo": null
+  }
+}

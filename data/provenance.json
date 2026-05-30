@@ -1,0 +1,195 @@
+{
+  "hero": {
+    "projects": "120+",
+    "accuracy": "99.3%",
+    "verify": "14 min"
+  },
+  "trustTimeline": [
+    {
+      "label": "Now - nominal state",
+      "trust": 92,
+      "incidents": ["inc-001"]
+    },
+    {
+      "label": "T-4 hr - drift detected",
+      "trust": 81,
+      "incidents": ["inc-001", "inc-002"]
+    },
+    {
+      "label": "T-2 days - schema conflict",
+      "trust": 67,
+      "incidents": ["inc-002", "inc-003"]
+    }
+  ],
+  "trustSpark": [70, 74, 78, 82, 85, 88, 91, 94, 92, 90, 88, 87, 89, 92, 93, 92],
+  "incidents": [
+    {
+      "id": "inc-001",
+      "title": "Drift risk - feature pipeline",
+      "stream": "toxicity.features.v3",
+      "severity": "warning"
+    },
+    {
+      "id": "inc-002",
+      "title": "Missing data hash",
+      "stream": "trial_sites.cohort_14",
+      "severity": "critical"
+    },
+    {
+      "id": "inc-003",
+      "title": "Environment mismatch",
+      "stream": "model.training.env",
+      "severity": "warning"
+    }
+  ],
+  "topology": {
+    "nodes": [
+      {"id": "raw-data", "x": 80, "y": 70, "r": 16, "status": "nominal", "label": "raw data", "artifactId": "artifact-raw"},
+      {"id": "clean", "x": 220, "y": 120, "r": 18, "status": "nominal", "label": "cleaning", "artifactId": "artifact-clean"},
+      {"id": "features", "x": 360, "y": 80, "r": 16, "status": "warning", "label": "features", "artifactId": "artifact-features"},
+      {"id": "train", "x": 320, "y": 240, "r": 20, "status": "warning", "label": "training", "artifactId": "artifact-train"},
+      {"id": "eval", "x": 470, "y": 200, "r": 14, "status": "nominal", "label": "evaluation", "artifactId": "artifact-eval"},
+      {"id": "report", "x": 560, "y": 140, "r": 24, "status": "critical", "label": "report", "artifactId": "artifact-report"}
+    ],
+    "edges": [
+      {"from": "raw-data", "to": "clean", "status": "nominal"},
+      {"from": "clean", "to": "features", "status": "warning"},
+      {"from": "clean", "to": "train", "status": "nominal"},
+      {"from": "features", "to": "train", "status": "warning"},
+      {"from": "train", "to": "eval", "status": "nominal"},
+      {"from": "eval", "to": "report", "status": "critical"}
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "artifact-raw",
+      "title": "Raw assay data",
+      "subtitle": "toxicity.raw.cohort_14",
+      "status": "Nominal",
+      "latency": "3.2s",
+      "quality": "99.6%",
+      "owner": "Data Ops",
+      "schema": "+ added field: assay_batch_id",
+      "lineage": ["s3://aesculapius/raw/", "etl.ingest"],
+      "actions": ["Open manifest", "Validate hash"]
+    },
+    {
+      "id": "artifact-clean",
+      "title": "Cleaned cohort",
+      "subtitle": "toxicity.clean.cohort_14",
+      "status": "Nominal",
+      "latency": "5.1s",
+      "quality": "99.1%",
+      "owner": "Data Engineering",
+      "schema": "~ updated field: toxicity_label (int -> float)",
+      "lineage": ["raw assay", "quality checks"],
+      "actions": ["Compare schema", "Open lineage"]
+    },
+    {
+      "id": "artifact-features",
+      "title": "Feature store",
+      "subtitle": "toxicity.features.v3",
+      "status": "Warning",
+      "latency": "10.2s",
+      "quality": "97.8%",
+      "owner": "ML Platform",
+      "schema": "! removed field: lipid_ratio",
+      "lineage": ["cleaned cohort", "feature pipeline"],
+      "actions": ["Open diff", "Branch replay"]
+    },
+    {
+      "id": "artifact-train",
+      "title": "Model training",
+      "subtitle": "toxicity.train.run_32",
+      "status": "Warning",
+      "latency": "18.4s",
+      "quality": "96.9%",
+      "owner": "Research Core",
+      "schema": "~ updated param: lr (0.001 -> 0.002)",
+      "lineage": ["features v3", "csv runner"],
+      "actions": ["Open run log", "Check environment"]
+    },
+    {
+      "id": "artifact-eval",
+      "title": "Evaluation suite",
+      "subtitle": "toxicity.eval.apr",
+      "status": "Nominal",
+      "latency": "6.7s",
+      "quality": "99.0%",
+      "owner": "Model QA",
+      "schema": "+ added metric: aupr",
+      "lineage": ["training run", "baseline report"],
+      "actions": ["Export metrics", "Verify replay"]
+    },
+    {
+      "id": "artifact-report",
+      "title": "Regulatory report",
+      "subtitle": "toxicity.report.submission",
+      "status": "Critical",
+      "latency": "22.1s",
+      "quality": "91.4%",
+      "owner": "Compliance",
+      "schema": "! missing hash: env_digest",
+      "lineage": ["evaluation suite", "audit ledger"],
+      "actions": ["Generate certificate", "Lock submission"]
+    }
+  ],
+  "personas": {
+    "lead": {
+      "title": "Principal Investigator",
+      "summary": "Portfolio view of program health, lineage confidence, and approval readiness.",
+      "focus": [
+        "Branch review for publication",
+        "Compliance gates for regulated data",
+        "Research timeline health"
+      ],
+      "actions": ["Approve merge", "Request verification", "Export reproducibility pack"]
+    },
+    "scientist": {
+      "title": "Computational Researcher",
+      "summary": "Notebook-first workspace with live provenance, diffs, and experiment comparisons.",
+      "focus": [
+        "Compare experiment branches",
+        "Trace anomaly to preprocessing",
+        "Replay historical runs"
+      ],
+      "actions": ["Fork timeline", "Run experiment", "Tag artifact"]
+    },
+    "compliance": {
+      "title": "Compliance Officer",
+      "summary": "Audit-focused view of policy adherence, signatures, and immutable records.",
+      "focus": [
+        "Policy violations",
+        "Audit ledger integrity",
+        "CSV runner compliance"
+      ],
+      "actions": ["Sign certificate", "Open policy bundle", "Generate audit report"]
+    }
+  },
+  "resilience": [
+    {
+      "tag": "Provenance gaps",
+      "title": "External data detection",
+      "summary": "Unregistered datasets are flagged and impact downstream artifacts with reduced confidence.",
+      "mitigation": "Repair flow links missing sources to hashed manifests."
+    },
+    {
+      "tag": "Environment drift",
+      "title": "Container integrity checks",
+      "summary": "Missing images or registry drift trigger rebuild prompts with explicit disclosure.",
+      "mitigation": "Fallback rebuilds are marked as non-authoritative."
+    },
+    {
+      "tag": "Merge conflicts",
+      "title": "Lineage-aware resolution",
+      "summary": "Artifact conflicts surface with diff views, keeping both branches traceable.",
+      "mitigation": "Merge nodes preserve decision history."
+    },
+    {
+      "tag": "Audit integrity",
+      "title": "Tamper-evident ledger",
+      "summary": "Hash chain mismatches lock projects until administrators validate records.",
+      "mitigation": "Merkle root signatures prove tamper status."
+    }
+  ]
+}
