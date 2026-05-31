@@ -46,8 +46,8 @@
             regulated environments.
           </p>
           <div class="hero-actions">
-            <button class="primary">Open provenance workspace</button>
-            <button class="secondary">View lineage graph</button>
+            <button class="primary">Generate evidence</button>
+            <button class="secondary">Trace lineage</button>
           </div>
           <div class="signal-band" aria-label="Operational signals">
             <div class="signal-chip">120+ active studies</div>
@@ -183,10 +183,24 @@
             <g class="nodes" id="topologyNodes"></g>
             <g class="labels" id="topologyLabels"></g>
           </svg>
-          <div class="timeline">
-            <div class="timeline-label">Timeline scrubber</div>
-            <input id="timeScrubber" type="range" min="0" max="2" step="1" value="0" />
-            <div class="timeline-meta" id="timeLabel">Now - nominal state</div>
+            <div class="timeline-brief">
+              <div class="timeline-label">Timeline</div>
+              <div class="timeline-meta small" id="timeLabel">Now - nominal state</div>
+            </div>
+        </div>
+        <div class="cockpit-side cockpit-side-right">
+          <div class="panel timeline-panel">
+            <div class="panel-title">Temporal navigation</div>
+            <div class="timeline">
+              <div class="timeline-label">Timeline scrubber</div>
+              <input id="timeScrubber" type="range" min="0" max="2" step="1" value="0" />
+              <div class="timeline-meta" id="timeLabel">Now - nominal state</div>
+            </div>
+            <div class="panel-title" style="margin-top:12px;">Replay controls</div>
+            <div class="sim-actions">
+              <button class="secondary">Run replay</button>
+              <button class="primary">Publish branch</button>
+            </div>
           </div>
         </div>
       </div>

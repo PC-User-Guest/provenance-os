@@ -26,6 +26,8 @@
   --activity: #34495E; /* Graph activity */
   --agent: #7D5BA6; /* Graph agent */
   --edges: #C8D1DB; /* Edge color */
+  --branch: #7B6CFF; /* Branch divergence */
+  --meta: var(--tertiary);
 
   --grid: rgba(27, 36, 48, 0.06);
   --shadow: 0 18px 40px rgba(10, 22, 40, 0.08);
@@ -157,6 +159,21 @@ body {
   top: 84px;
 }
 
+.cockpit-side-right {
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timeline-panel .timeline {
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,252,253,0.96));
+  border-radius: 12px;
+  border: 1px solid rgba(15,24,36,0.06);
+}
+
 .metric-rail {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -198,7 +215,7 @@ body {
 
 .cockpit {
   display: grid;
-  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr) minmax(280px, 340px);
   gap: 24px;
 }
 
