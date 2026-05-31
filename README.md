@@ -1,49 +1,32 @@
-# Provenance OS — Production
+## Provenance OS — Production (Executive Summary)
 
 Release: v1.0.0-prod
 
-Provenance OS implements a "Computational Evidence Workspace" focused on evidence, time, causality, and trust. This `03 - Prod` folder contains the production-ready static site and short-form documentation for contributors and release engineers.
+Provenance OS is a lightweight, production-ready frontend showcasing a "Computational Evidence Workspace" that highlights evidence, time, and trust relationships. This folder (`03 - Prod`) contains the static site used for stakeholder demos and executive review.
 
-Quick start (local)
--------------------
-Requirements:
-- Node.js (LTS)
-- `git`
+**Demo:** https://provenance-os.vercel.app
 
-Run a lightweight static server from this folder:
+**Key outcomes:**
+- Product-ready three-column cockpit UI emphasizing evidence discovery and temporal tracing.
+- Outcome-oriented microcopy (e.g., "Generate evidence", "Trace lineage") tailored for non-technical stakeholders.
+- Accessibility improvements: keyboard navigation for interactive SVGs, visible focus states, and CI-run Lighthouse audits.
 
-```powershell
-# from D:\Workspace\Figma (2026)\Provenance OS\03 - Prod
-npx http-server . -p 4173 --silent
-# then open http://127.0.0.1:4173
-```
+**What stakeholders should know:**
+- Audience: senior marketing managers and UI/UX strategy leads — this build is intended for product demos and strategy review.
+- Where to view: open the live demo above or [index.html](index.html) locally for offline review.
+- Executive takeaway: the interface demonstrates provenance workflows (identify → verify → trace) and supports concise storytelling for buyer conversations.
 
-Project structure (summary)
----------------------------
-- `index.html` — production entry HTML. Preserve DOM IDs used by `main.js`.
-- `styles.css` — design tokens, layout, and component styles.
-- `main.js` — front-end runtime that wires data to the DOM.
-- `keyboard-a11y.js` — small helper to make SVG nodes keyboard-focusable.
-- `.github/workflows/lighthouse.yml` — CI job that runs Lighthouse and uploads `lighthouse.json`.
-- `docs/` — project documentation (this folder).
+**Next steps (recommended):**
+- Approve the demo copy and hero outcomes for marketing assets.
+- Request a short product demo recording (30–60s) that highlights the three-column cockpit and temporal rail.
+- Sign off on accessibility checklist items (CI Lighthouse artifact is available in the workflow run).
 
-Design & strategy links
------------------------
-The UI implements the principles from `01 - Planning/Web UX and UI Implementation plan - version 2.md` (three permanent navigation dimensions: Space, Time, Trust). Use that file as the canonical product strategy reference.
+Developer notes (condensed)
+- Production entry: [index.html](index.html) — preserve DOM hook IDs used by `main.js` when changing layout.
+- Styles: [styles.css](styles.css) — design tokens and layout.
+- Runtime: [main.js](main.js) — rendering logic for topology, timeline, incidents, and drawer.
+- Accessibility helper: [keyboard-a11y.js](keyboard-a11y.js).
 
-Development notes
------------------
-- Preserve the following DOM IDs (used by `main.js`) when adjusting layout or refactoring:
-  - `pulseGrid`, `heroProjects`, `heroAccuracy`, `heroVerify`, `trustScore`, `trustSpark`, `incidentList`, `topologyGraph`, `topologyEdges`, `topologyNodes`, `topologyLabels`, `timeScrubber`, `timeLabel`, `drawerTitle`, `drawerSubtitle`, `drawerMetrics`, `drawerSchema`, `drawerLineage`, `drawerActions`, `drawerClose`, `replayRange`, `replayValue`, `replayRisk`, `resilienceGrid`.
+Internal engineering and archival documents have been moved to `.internal/docs/` to keep the public surface focused on stakeholder-facing content.
 
-Accessibility & audits
-----------------------
-- A GitHub Actions workflow runs Lighthouse on push and uploads `lighthouse.json` as a workflow artifact. Use that report as the canonical performance/accessibility snapshot.
-
-Contributing
-------------
-See `docs/CONTRIBUTING.md` for guidelines on commits, PRs, and testing.
-
-License
--------
-No license file is included by default — add `LICENSE` if you intend to publish or open-source the project.
+For development setup and contribution guidelines, see [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md).
