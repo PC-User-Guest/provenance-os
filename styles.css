@@ -1,22 +1,44 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap");
-
 :root {
+  /* Design tokens from Web UX & UI Implementation plan */
   color-scheme: light;
-  --bg: #f4f6f8;
-  --bg-2: #e7edf3;
-  --panel: #ffffff;
-  --panel-2: #eef2f7;
-  --text: #0f1824;
-  --muted: #516070;
-  --accent: #29b9b3;
-  --accent-2: #3a78ff;
-  --warn: #f2a744;
-  --crit: #ff5b5b;
-  --meta: #7b6cff;
-  --ok: #2ac47d;
-  --grid: rgba(0, 24, 60, 0.06);
-  --shadow: 0 18px 40px rgba(10, 22, 40, 0.12);
-  --radius: 18px;
+  --bg: #F8FAFB; /* Primary Background */
+  --panel: #FFFFFF; /* Secondary Surface */
+  --panel-2: #FCFCFD; /* Elevated Surface */
+  --panel-dark: #EEF2F5; /* Dark Surface */
+  --text: #1B2430; /* Primary text */
+  --muted: #516173; /* Secondary text */
+  --tertiary: #7E8B99;
+  --disabled: #B0BAC4;
+
+  --accent: #0F6B73; /* Deep Provenance Teal (primary) */
+  --accent-2: #3347A9; /* Scientific Indigo (secondary) */
+
+  --ok: #1E8E5A; /* Success */
+  --certified: #127A49; /* Certified */
+  --warn: #D48A00; /* Warning */
+  --stale: #E0A84F; /* Stale */
+  --crit: #C94040; /* Error */
+  --running: #2D7FF9; /* Running */
+  --queued: #7C5DFA; /* Queued */
+  --unverified: #8893A2; /* Unverified */
+
+  --entity: #1F7A8C; /* Graph entity */
+  --activity: #34495E; /* Graph activity */
+  --agent: #7D5BA6; /* Graph agent */
+  --edges: #C8D1DB; /* Edge color */
+
+  --grid: rgba(27, 36, 48, 0.06);
+  --shadow: 0 18px 40px rgba(10, 22, 40, 0.08);
+  --radius: 16px;
+
+  /* Type scale */
+  --fs-display: 40px;
+  --fs-page-title: 32px;
+  --fs-section-title: 24px;
+  --fs-panel-title: 18px;
+  --fs-body: 14px;
+  --fs-small: 12px;
+  --fs-metadata: 11px;
 }
 
 * {
@@ -25,9 +47,11 @@
 
 body {
   margin: 0;
-  font-family: "Sora", "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #ffffff 0%, #ecf1f7 50%, #e4ebf4 100%);
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  background: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .bg-field {
@@ -56,9 +80,10 @@ body {
 }
 
 .logo {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  color: var(--accent);
 }
 
 .nav-links {
@@ -105,7 +130,7 @@ body {
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: var(--accent-2);
   font-size: 0.75rem;
 }
@@ -130,11 +155,11 @@ button:active {
 .primary {
   background: linear-gradient(120deg, var(--accent), var(--accent-2));
   border: none;
-  color: #091821;
+  color: #ffffff;
   font-weight: 600;
-  padding: 12px 22px;
-  border-radius: 999px;
-  box-shadow: var(--shadow);
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(15, 36, 48, 0.08);
 }
 
 .secondary {
@@ -161,8 +186,9 @@ button:active {
 }
 
 .metric .value {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .metric .label {
@@ -173,11 +199,11 @@ button:active {
 }
 
 .hero-card {
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.95), rgba(230, 237, 245, 0.92));
-  padding: 24px;
-  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel), rgba(246, 250, 252, 0.6));
+  padding: 20px;
+  border-radius: 12px;
   box-shadow: var(--shadow);
-  border: 1px solid rgba(15, 24, 36, 0.08);
+  border: 1px solid rgba(27, 36, 48, 0.06);
 }
 
 .card-header {
@@ -326,12 +352,12 @@ button:active {
 }
 
 .pill {
-  background: rgba(41, 185, 179, 0.2);
+  background: rgba(15, 107, 115, 0.08);
   color: var(--accent);
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 6px 12px;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   font-size: 0.7rem;
 }
 
@@ -344,7 +370,7 @@ button:active {
 .topology .edges line {
   stroke: url(#flow);
   stroke-width: 2.5;
-  opacity: 0.55;
+  opacity: 0.65;
   stroke-dasharray: 8 8;
   animation: flow 6s linear infinite;
 }
@@ -364,10 +390,10 @@ button:active {
 }
 
 .topology .nodes circle {
-  fill: #f8fafc;
-  stroke: var(--accent);
+  fill: var(--panel);
+  stroke: var(--entity);
   stroke-width: 2;
-  filter: drop-shadow(0 0 8px rgba(41, 185, 179, 0.35));
+  filter: drop-shadow(0 6px 18px rgba(27, 36, 48, 0.06));
 }
 
 .topology .nodes circle.node-warning {
@@ -389,9 +415,9 @@ button:active {
 }
 
 .topology .labels text {
-  font-size: 0.7rem;
-  font-family: "JetBrains Mono", "Consolas", monospace;
-  fill: #4a5b6f;
+  font-size: 0.75rem;
+  font-family: "JetBrains Mono", monospace;
+  fill: var(--muted);
 }
 
 .timeline {
