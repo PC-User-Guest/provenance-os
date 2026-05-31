@@ -65,6 +65,11 @@ body {
   z-index: 0;
 }
 
+.page-shell {
+  position: relative;
+  z-index: 1;
+}
+
 /* Layout: sidebar + main content to diverge from Signal Mesh */
 .sidebar {
   position: fixed;
@@ -106,6 +111,135 @@ body {
   margin-left: 240px;
 }
 
+.cover {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.85fr);
+  gap: 28px;
+  align-items: start;
+  padding: 32px 6vw 20px;
+}
+
+.cover-copy {
+  background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.72));
+  border: 1px solid rgba(15, 24, 36, 0.08);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+.cover-copy h1 {
+  font-size: clamp(2.7rem, 5vw, 4.4rem);
+  line-height: 0.98;
+  max-width: 12ch;
+  margin-bottom: 18px;
+}
+
+.signal-band {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.signal-chip {
+  background: rgba(15, 107, 115, 0.08);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 12px 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cover-rail {
+  display: grid;
+  gap: 14px;
+  position: sticky;
+  top: 84px;
+}
+
+.metric-rail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric-rail-item {
+  padding: 12px;
+}
+
+.rail-note {
+  background: linear-gradient(180deg, rgba(51, 71, 169, 0.08), rgba(15, 107, 115, 0.06));
+  border-radius: 18px;
+  padding: 16px;
+  color: var(--muted);
+  border: 1px solid rgba(15, 24, 36, 0.08);
+}
+
+.overview-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.15fr);
+  gap: 24px;
+}
+
+.overview-card-lead {
+  min-height: 100%;
+  background: linear-gradient(180deg, rgba(15,107,115,0.08), rgba(255,255,255,0.95));
+}
+
+.overview-cluster {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.overview-cluster .overview-card:last-child {
+  grid-column: 1 / -1;
+}
+
+.cockpit {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  gap: 24px;
+}
+
+.cockpit-side-first {
+  order: -1;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.recommendation-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
+  border-radius: var(--radius);
+  padding: 22px;
+  border: 1px solid rgba(15, 24, 36, 0.08);
+  box-shadow: var(--shadow);
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 12px;
+}
+
+.skip-link:focus {
+  left: 12px;
+}
+
+a:focus,
+button:focus,
+.sidebar-nav a:focus,
+.persona-tab:focus,
+.drawer-close:focus,
+input:focus {
+  outline: 3px solid rgba(15,107,115,0.18);
+  outline-offset: 3px;
+}
+
 .topbar {
   height: 64px;
   display: flex;
@@ -122,7 +256,7 @@ body {
 .workspace-meta { color: var(--muted); font-size:0.9rem }
 
 .hero {
-  padding: 28px 6vw 56px;
+  padding: 0;
   position: relative;
   z-index: 1;
 }
@@ -418,11 +552,11 @@ button:active {
 }
 
 .topology .edges line {
-  stroke: url(#flow);
-  stroke-width: 2.5;
-  opacity: 0.65;
-  stroke-dasharray: 8 8;
-  animation: flow 6s linear infinite;
+  stroke: var(--edges);
+  stroke-width: 1.8;
+  opacity: 0.7;
+  stroke-dasharray: 4 6;
+  transition: stroke 200ms ease, opacity 200ms ease;
 }
 
 .topology .edges line.edge-warning {
@@ -441,14 +575,15 @@ button:active {
 
 .topology .nodes circle {
   fill: var(--panel);
-  stroke: var(--entity);
-  stroke-width: 2;
+  stroke: var(--activity);
+  stroke-width: 1.6;
   filter: drop-shadow(0 6px 18px rgba(27, 36, 48, 0.06));
+  transition: transform 180ms ease, filter 180ms ease;
 }
 
 .topology .nodes circle.node-warning {
   stroke: var(--warn);
-  filter: drop-shadow(0 0 10px rgba(242, 167, 68, 0.4));
+  filter: drop-shadow(0 0 10px rgba(242, 167, 68, 0.36));
 }
 
 .topology .nodes circle.node-critical {
@@ -461,13 +596,31 @@ button:active {
 }
 
 .topology .nodes circle.node-interactive:hover {
-  filter: drop-shadow(0 0 14px rgba(58, 120, 255, 0.6));
+  transform: scale(1.06);
+  filter: drop-shadow(0 8px 26px rgba(15, 107, 115, 0.12));
 }
 
 .topology .labels text {
-  font-size: 0.75rem;
-  font-family: "JetBrains Mono", monospace;
-  fill: var(--muted);
+  font-size: 0.78rem;
+  font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+  fill: var(--tertiary);
+}
+
+/* Accessibility: visible focus states */
+a:focus, button:focus, .sidebar-nav a:focus {
+  outline: 3px solid rgba(15,107,115,0.12);
+  outline-offset: 3px;
+}
+
+.skip-link:focus {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  z-index: 9999;
 }
 
 .timeline {

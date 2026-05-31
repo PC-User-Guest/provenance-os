@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <div class="bg-field"></div>
     <aside class="sidebar" aria-label="Main navigation">
       <div class="sidebar-brand">Provenance OS</div>
@@ -34,9 +35,9 @@
           <div class="time-state">Current</div>
         </div>
       </header>
-      <header class="hero">
-      <div class="hero-grid">
-        <div class="hero-copy">
+      <main id="main" class="page-shell">
+      <section class="cover reveal">
+        <div class="cover-copy">
           <div class="eyebrow">Scientific data reproducibility</div>
           <h1>Make every analysis verifiable the moment it is created.</h1>
           <p>
@@ -48,31 +49,40 @@
             <button class="primary">Open provenance workspace</button>
             <button class="secondary">View lineage graph</button>
           </div>
-          <div class="hero-metrics">
-            <div class="metric">
+          <div class="signal-band" aria-label="Operational signals">
+            <div class="signal-chip">120+ active studies</div>
+            <div class="signal-chip">99.3% replay accuracy</div>
+            <div class="signal-chip">14 min mean verify time</div>
+          </div>
+        </div>
+        <aside class="cover-rail">
+          <div class="hero-card">
+            <div class="card-header">Live provenance pulse</div>
+            <div class="pulse-grid" id="pulseGrid"></div>
+            <div class="card-footer">
+              <span>Aesculapius Therapeutics</span>
+              <span class="status ok">Verified</span>
+            </div>
+          </div>
+          <div class="metric-rail">
+            <div class="metric metric-rail-item">
               <div class="value" id="heroProjects">120+</div>
               <div class="label">active studies</div>
             </div>
-            <div class="metric">
+            <div class="metric metric-rail-item">
               <div class="value" id="heroAccuracy">99.3%</div>
               <div class="label">replay accuracy</div>
             </div>
-            <div class="metric">
+            <div class="metric metric-rail-item">
               <div class="value" id="heroVerify">14 min</div>
               <div class="label">mean verify time</div>
             </div>
           </div>
-        </div>
-        <div class="hero-card">
-          <div class="card-header">Live provenance pulse</div>
-          <div class="pulse-grid" id="pulseGrid"></div>
-          <div class="card-footer">
-            <span>Aesculapius Therapeutics</span>
-            <span class="status ok">Verified</span>
+          <div class="rail-note">
+            Recommended fix: run Lighthouse in CI so local Windows temp cleanup does not block audit capture.
           </div>
-        </div>
-      </div>
-    </header>
+        </aside>
+      </section>
 
     <section id="overview" class="section reveal">
       <div class="section-header">
@@ -82,14 +92,15 @@
           enforcement so that provenance is captured automatically and trusted instantly.
         </p>
       </div>
-      <div class="overview-grid">
-        <div class="overview-card">
+      <div class="overview-layout">
+        <div class="overview-card overview-card-lead">
           <h3>Ubiquitous capture</h3>
           <p>
             Every run, dataset, and environment snapshot is recorded without disrupting
             exploratory workflows.
           </p>
         </div>
+        <div class="overview-cluster">
         <div class="overview-card">
           <h3>Temporal navigation</h3>
           <p>
@@ -111,6 +122,7 @@
             and reproducibility risk.
           </p>
         </div>
+        </div>
       </div>
     </section>
 
@@ -123,6 +135,35 @@
         </p>
       </div>
       <div class="cockpit">
+        <div class="cockpit-side cockpit-side-first">
+          <div class="panel">
+            <div class="panel-title">Current state</div>
+            <div class="trust-score">
+              <div class="score" id="trustScore">92</div>
+              <div class="score-meta">Composite reproducibility</div>
+            </div>
+            <div class="sparkline" id="trustSpark"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Policy gates</div>
+            <div class="route">
+              <span>OPA policy bundle</span>
+              <span class="tag">Passing</span>
+            </div>
+            <div class="route">
+              <span>CSV runner image</span>
+              <span class="tag">Pinned</span>
+            </div>
+            <div class="route">
+              <span>Ledger integrity</span>
+              <span class="tag">Verified</span>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Active findings</div>
+            <div id="incidentList"></div>
+          </div>
+        </div>
         <div class="cockpit-main">
           <div class="cockpit-header">
             <div>
@@ -146,35 +187,6 @@
             <div class="timeline-label">Timeline scrubber</div>
             <input id="timeScrubber" type="range" min="0" max="2" step="1" value="0" />
             <div class="timeline-meta" id="timeLabel">Now - nominal state</div>
-          </div>
-        </div>
-        <div class="cockpit-side">
-          <div class="panel">
-            <div class="panel-title">Active findings</div>
-            <div id="incidentList"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Reproducibility confidence</div>
-            <div class="trust-score">
-              <div class="score" id="trustScore">92</div>
-              <div class="score-meta">Composite reproducibility</div>
-            </div>
-            <div class="sparkline" id="trustSpark"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-title">Policy gates</div>
-            <div class="route">
-              <span>OPA policy bundle</span>
-              <span class="tag">Passing</span>
-            </div>
-            <div class="route">
-              <span>CSV runner image</span>
-              <span class="tag">Pinned</span>
-            </div>
-            <div class="route">
-              <span>Ledger integrity</span>
-              <span class="tag">Verified</span>
-            </div>
           </div>
         </div>
       </div>
@@ -359,6 +371,29 @@
       </div>
     </section>
 
+    <section id="recommendations" class="section reveal">
+      <div class="section-header">
+        <h2>Recommended fixes</h2>
+        <p>
+          These are the highest-value follow-ups I would apply next to finish the redesign and remove the remaining rough edges.
+        </p>
+      </div>
+      <div class="recommendations-grid">
+        <div class="recommendation-card">
+          <div class="panel-title">Structure</div>
+          <p>Keep the new cover/rail composition and avoid reintroducing the old centered hero pattern.</p>
+        </div>
+        <div class="recommendation-card">
+          <div class="panel-title">Accessibility</div>
+          <p>Run a contrast pass on smaller labels and verify all controls are reachable with keyboard only.</p>
+        </div>
+        <div class="recommendation-card">
+          <div class="panel-title">Audit capture</div>
+          <p>Move Lighthouse into CI and commit the generated report instead of relying on local Windows temp cleanup.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="section reveal">
       <div class="section-header">
         <h2>LabBench DS design system</h2>
@@ -411,6 +446,8 @@
       </div>
     </section>
 
+      </main>
+
     <footer class="footer">
       <div>Provenance OS - reproducibility as a native property of research.</div>
       <div class="footer-links">
@@ -419,6 +456,8 @@
         <span>Contact</span>
       </div>
     </footer>
+
+    </div>
 
     <script src="main.js"></script>
   </body>
