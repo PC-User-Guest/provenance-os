@@ -620,7 +620,16 @@ button:active {
 .topology .labels text {
   font-size: 0.78rem;
   font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
-  fill: var(--tertiary);
+  fill: var(--text);
+}
+
+/* Improve focus visibility for keyboard navigation on SVG nodes */
+.topology .nodes circle:focus,
+.topology .nodes circle.focused {
+  transform: scale(1.08);
+  filter: drop-shadow(0 10px 24px rgba(15,107,115,0.14));
+  stroke-width: 2.4;
+  stroke: var(--accent);
 }
 
 /* Accessibility: visible focus states */
