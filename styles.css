@@ -65,19 +65,69 @@ body {
   z-index: 0;
 }
 
+/* Layout: sidebar + main content to diverge from Signal Mesh */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 220px;
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border-right: 1px solid rgba(27,36,48,0.04);
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 3;
+}
+.sidebar-brand {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sidebar-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+.sidebar-nav a:hover {
+  background: rgba(15,36,48,0.02);
+  color: var(--text);
+}
+.sidebar-footer { margin-top: auto; }
+
+.main-content {
+  margin-left: 240px;
+}
+
+.topbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6vw;
+  background: transparent;
+  border-bottom: 1px solid rgba(27,36,48,0.03);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.topbar-left { display:flex; gap:12px; align-items:center; }
+.workspace-meta { color: var(--muted); font-size:0.9rem }
+
 .hero {
-  padding: 40px 6vw 80px;
+  padding: 28px 6vw 56px;
   position: relative;
   z-index: 1;
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 56px;
-}
+.nav { display:none; }
 
 .logo {
   font-size: 1.05rem;
