@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="rail-note">
-            Recommended fix: run Lighthouse in CI so local Windows temp cleanup does not block audit capture.
+            Recommended fix: run Lighthouse in CI so audit capture stays deterministic.
           </div>
         </aside>
       </section>
@@ -403,7 +403,7 @@
         </div>
         <div class="recommendation-card">
           <div class="panel-title">Audit capture</div>
-          <p>Move Lighthouse into CI and commit the generated report instead of relying on local Windows temp cleanup.</p>
+          <p>Move Lighthouse into CI and commit the generated report for consistent audits.</p>
         </div>
       </div>
     </section>

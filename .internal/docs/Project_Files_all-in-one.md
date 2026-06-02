@@ -1,7 +1,7 @@
 Project Files — All-in-one index
 ================================
 
-A short index of files in `03 - Prod` for quick reference.
+A short index of files at the repository root for quick reference.
 
 - `index.html` — Production HTML
 - `styles.css` — CSS tokens and components

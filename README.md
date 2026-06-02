@@ -2,7 +2,7 @@
 
 Release: v1.0.0-prod
 
-Provenance OS is a lightweight, production-ready frontend showcasing a "Computational Evidence Workspace" that highlights evidence, time, and trust relationships. This folder (`03 - Prod`) contains the static site used for stakeholder demos and executive review.
+Provenance OS is a lightweight, production-ready frontend showcasing a "Computational Evidence Workspace" that highlights evidence, time, and trust relationships. This repository contains the static site used for stakeholder demos and executive review.
 
 **Demo:** https://provenance-os.vercel.app
 
