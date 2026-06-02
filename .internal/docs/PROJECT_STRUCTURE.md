@@ -1,11 +1,11 @@
-Project Structure — Provenance OS (Prod)
-=========================================
+Project Structure — Provenance OS
+=================================
 
 Purpose
 -------
 This document explains the on-disk layout for the production site and where to find source artifacts.
 
-Top-level layout (in `03 - Prod`):
+Top-level layout (repository root):
 
 - `index.html` — Entry point for production UI. Keep DOM hook IDs stable.
 - `styles.css` — Tokens, component styles, layout rules.

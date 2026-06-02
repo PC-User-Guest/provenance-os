@@ -3,7 +3,7 @@ Development notes
 
 Local workflow
 --------------
-1. Start a static server from `03 - Prod`:
+1. Start a static server from the repository root:
 
 ```powershell
 npx http-server . -p 4173 --silent
